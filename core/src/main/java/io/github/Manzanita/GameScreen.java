@@ -93,7 +93,8 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         // en game over, pulsar la tecla R para reinicar
         if (gameOver) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            if (Gdx.input.justTouched())
+                {
                 reiniciarPartida();
             }
             draw(); // dibuja pantalla de game over
@@ -205,7 +206,7 @@ public class GameScreen implements Screen {
         // Mensaje de Game Over
         if (gameOver) {
             game.font.draw(game.batch, "GAME OVER", worldWidth / 2f - 2f, worldHeight / 2f + 1f);
-            game.font.draw(game.batch, "Pulsa R para reiniciar", worldWidth / 2f - 2.5f, worldHeight / 2f+1.5f);
+            game.font.draw(game.batch, "Pulsa la pantalla para reiniciar", worldWidth / 2f - 2.5f, worldHeight / 2f+1.5f);
         }
 
         game.batch.end();

@@ -16,7 +16,7 @@ ManzanitaWorld es un juego arcade sencillo en el que el jugador controla una ces
 - 📈 Dificultad progresiva (cada 10 segundos aumenta la velocidad)
 - ❤️ Sistema de vidas
 - 🎵 Música y efectos de sonido
-- 🔄 Sistema de reinicio rápido (pulsando R)
+- 🔄 Sistema de reinicio rápido (pulsando la pantalla)
 
 ## 🎯 Mecánicas del juego
 
@@ -40,7 +40,7 @@ ManzanitaWorld es un juego arcade sencillo en el que el jugador controla una ces
 
 - **Teclado**: Flechas izquierda/derecha para mover la cesta
 - **Táctil/Mouse**: Clic o toque en la pantalla
-- **R**: Reiniciar partida (durante Game Over)
+- **Pulsar pantalla**: Reiniciar partida (durante Game Over)
 
 ## 🏗️ Arquitectura
 
