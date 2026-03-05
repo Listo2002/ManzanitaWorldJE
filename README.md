@@ -2,6 +2,9 @@
 
 Un juego arcade desarrollado con libGDX donde controlas una cesta para recoger manzanas que caen del cielo.
 
+## 👨‍💻 Autor
+JE
+
 ## 📋 Descripción
 
 ManzanitaWorld es un juego arcade sencillo en el que el jugador controla una cesta que debe recoger diferentes tipos de manzanas que caen en un campo. El objetivo es conseguir la máxima puntuación posible mientras gestionas tus vidas y la dificultad creciente del juego.
