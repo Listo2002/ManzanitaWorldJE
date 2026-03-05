@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
         manzanaDoradaTexture = new Texture("manzana_dorada.png");
         manzanaPodridaTexture = new Texture("manzana_podrida.png");
 
-        manzanaSonido = Gdx.audio.newSound(Gdx.files.internal("drop.mp3"));
+        manzanaSonido = Gdx.audio.newSound(Gdx.files.internal("sonido.mp3"));
         musica = Gdx.audio.newMusic(Gdx.files.internal("the_field_of_dreams.mp3"));
         musica.setLooping(true);
         musica.setVolume(0.5F);
@@ -171,7 +171,7 @@ public class GameScreen implements Screen {
             }
         }
 
-        // si se ha activado gameOver en el bucle, no se generan más manzanas
+        // si se ha activado gameover en el bucle, no se generan más manzanas
         if (gameOver) return;
 
         // crear nuevas manzanas
@@ -194,8 +194,7 @@ public class GameScreen implements Screen {
         game.batch.draw(fondoTexture, 0, 0, worldWidth, worldHeight);
         cestaSprite.draw(game.batch);
 
-        // HUD: puntuación y vidas
-
+        // Puntuación y vidas
         game.font.draw(game.batch, "Manzanas: " + manzanasRecolectadas, 0.5f, worldHeight - 0.5f);
         game.font.draw(game.batch, "Vidas: " + vidas, 0.5f, worldHeight - 1.0f);
 
