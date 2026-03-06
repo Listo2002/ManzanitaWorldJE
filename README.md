@@ -1,137 +1,329 @@
 # 🍎 ManzanitaWorld
 
-Un juego arcade desarrollado con libGDX donde controlas una cesta para recoger manzanas que caen del cielo.
+Un juego arcade desarrollado con **libGDX** donde controlas una cesta para recoger manzanas que caen del cielo.
+
+---
 
 ## 👨‍💻 Autor
-JE
 
-## 📋 Descripción
+**JE**
 
-ManzanitaWorld es un juego arcade sencillo en el que el jugador controla una cesta que debe recoger diferentes tipos de manzanas que caen en un campo. El objetivo es conseguir la máxima puntuación posible mientras gestionas tus vidas y la dificultad creciente del juego.
+---
 
-### Características principales
+# 📋 Descripción
 
-- 🎮 Controles simples: teclado o ratón
-- 🍏 Tres tipos de manzanas con diferentes texturas y velocidades
-- 📈 Dificultad progresiva (cada 10 segundos aumenta la velocidad)
-- ❤️ Sistema de vidas
-- 🎵 Música y efectos de sonido
-- 🔄 Sistema de reinicio rápido (pulsando la pantalla)
+**ManzanitaWorld** es un juego arcade sencillo en el que el jugador controla una cesta que debe recoger diferentes tipos de manzanas que caen en un campo.
 
-## 🎯 Mecánicas del juego
+El objetivo es conseguir la **máxima puntuación posible** mientras gestionas la **dificultad creciente del juego** y el **tiempo disponible**, que puede configurarse en segundos desde la pantalla de **Ajustes**.
 
-### Tipos de manzanas
+**Valor por defecto:** `60 segundos`
 
-| Tipo | Puntos | Velocidad | Efecto |
-|------|--------|-----------|--------|
-| 🍎 Normal | +1 | Base | Resta vida si se escapa |
-| 🌟 Dorada | +3 | Rápida | Resta vida si se escapa |
-| 🍏 Podrida | -2 | Variable | No resta vida si se escapa |
+---
 
-### Sistema de puntuación
+# ✨ Características principales
 
-- Comienza con **3 vidas**
-- Las manzanas buenas (normal/dorada) restan 1 vida si caen fuera de la pantalla
-- Las manzanas podridas penalizan la puntuación pero no afectan las vidas
-- La velocidad de caída aumenta progresivamente cada 10 segundos
-- **Game Over** al llegar a 0 vidas
+* 🎮 Controles simples: teclado, ratón o pantalla táctil
+* 🍏 Variedad de objetos: manzanas normales, doradas, podridas, power-ups y trampas
+* 📈 Dificultad por niveles: la velocidad y aparición de manzanas aumentan cada 10 manzanas recogidas
+* ⏱️ Modo contrarreloj configurable
+* 🏆 Sistema de récords (**High Score**) guardado entre partidas
+* ⏸️ Pantalla de pausa integrada
+* 🎵 Música y efectos de sonido activables/desactivables en Ajustes
+* 🔄 Reinicio rápido tras Game Over
+* 📘 Pantalla de ayuda (**HowToPlayScreen**)
 
-## 🎮 Controles
+---
 
-- **Teclado**: Flechas izquierda/derecha para mover la cesta
-- **Táctil/Mouse**: Clic o toque en la pantalla
-- **Pulsar pantalla**: Reiniciar partida (durante Game Over)
+# 🎯 Mecánicas del juego
 
-## 🏗️ Arquitectura
+## 🍎 Objetos y tipos de manzanas
 
-### Estructura de clases
+| Tipo        | Textura                | Puntos | Velocidad     | Efecto                                   |
+| ----------- | ---------------------- | ------ | ------------- | ---------------------------------------- |
+| 🍎 Normal   | `manzana.png`          | +1     | Base          | Suma puntos y cuenta para subir de nivel |
+| 🌟 Dorada   | `manzana_dorada.png`   | +3     | Rápida (x1.5) | Suma más puntos                          |
+| 🍏 Podrida  | `manzana_podrida.png`  | -2     | Lenta (x0.7)  | Resta puntos                             |
+| 🔵 Power-Up | `cesta.png` (azul)     | 0      | Media (x1.2)  | Cesta gigante o cámara lenta durante 5s  |
+| 💣 Trampa   | `manzana_podrida` gris | 0      | Rápida (x1.3) | **Game Over inmediato**                  |
 
+---
+
+## ⏱️ Dinámica de la partida
+
+* Cada partida dura el **tiempo configurado en Ajustes**.
+* Si el jugador no modifica el tiempo:
+
+```text
+Tiempo por defecto = 60 segundos
 ```
+
+### Durante la partida
+
+* 🍎 Manzanas buenas → suman puntos
+* 🍏 Manzanas podridas → restan puntos
+* 💣 Trampas → terminan la partida
+
+### Sistema de niveles
+
+Cada **10 manzanas recogidas**:
+
+* ↑ aumenta la velocidad de caída
+* ↓ disminuye el tiempo entre apariciones de manzanas
+
+---
+
+## 🏆 Sistema de récords
+
+Al finalizar la partida:
+
+* Si la puntuación es mayor que el récord guardado
+* Se actualiza automáticamente el **High Score**
+
+Los datos se almacenan usando **Preferences de libGDX**.
+
+---
+
+## ☠️ Game Over
+
+El juego termina cuando ocurre uno de los siguientes eventos:
+
+1. ⏳ Se acaba el tiempo de la partida
+2. 💣 La cesta toca una trampa
+
+---
+
+# 🎮 Controles
+
+## ⌨️ Teclado
+
+| Tecla | Acción                     |
+| ----- | -------------------------- |
+| ⬅️    | mover cesta a la izquierda |
+| ➡️    | mover cesta a la derecha   |
+| ESC   | pausar / reanudar          |
+
+---
+
+## 🖱️ Ratón o pantalla táctil
+
+* Clic o arrastrar para mover la cesta horizontalmente.
+
+---
+
+## 📱 Pantalla Game Over
+
+* Tocar la pantalla (tras ~1 segundo) para volver al menú.
+
+---
+
+## ⚙️ Ajustes (SettingsScreen)
+
+| Acción                            | Resultado                 |
+| --------------------------------- | ------------------------- |
+| Tocar lado izquierdo del selector | −10 segundos              |
+| Tocar lado derecho                | +10 segundos              |
+| Tiempo mínimo                     | 30s                       |
+| Tocar texto sonido                | activar/desactivar sonido |
+
+---
+
+# 🏗️ Arquitectura
+
+## 📂 Estructura de clases
+
+```text
 ManzanitaWorld/
+│
 ├── Manzana (Game)
-│   └── Clase principal que extiende Game
-│       ├── Inicializa SpriteBatch y BitmapFont
-│       ├── Configura FitViewport (8x5 unidades)
-│       └── Gestiona el ciclo de vida de las pantallas
 │
 ├── MainMenuScreen (Screen)
-│   └── Pantalla de inicio
-│       ├── Muestra título y mensaje de bienvenida
-│       └── Transición a GameScreen al interactuar
 │
-└── GameScreen (Screen)
-    └── Pantalla principal del juego
-        ├── Gestión de texturas y sprites
-        ├── Sistema de música y sonido
-        ├── Lógica de movimiento (cesta y manzanas)
-        ├── Sistema de colisiones
-        ├── Control de puntuación y vidas
-        ├── Dificultad progresiva
-        └── Estado de Game Over y reinicio
+├── GameScreen (Screen)
+│
+├── SettingsScreen (Screen)
+│
+└── HowToPlayScreen (Screen)
 ```
 
-### Pantallas (Screens)
+---
 
-1. **MainMenuScreen**: Menú principal con título y opción de comenzar
-2. **GameScreen**: Pantalla de juego con HUD (puntuación y vidas) y mensaje de Game Over
+## 🧠 Responsabilidades
 
-## 🔧 Desarrollo
+### Manzana (Game)
 
-### Aspectos técnicos destacados
+Clase principal que:
 
-#### Movimiento independiente de FPS
-Todo el movimiento utiliza `delta time` mediante `Gdx.graphics.getDeltaTime()`, garantizando velocidad consistente independientemente del hardware.
+* inicializa `SpriteBatch`
+* inicializa `BitmapFont`
+* controla el ciclo de vida de pantallas
 
-#### Sistema de generación de manzanas
-- Generación periódica con temporizador
-- Posiciones aleatorias en el eje X
-- Velocidad base que aumenta con el tiempo
-- Tipos de manzana con probabilidades diferentes
+---
 
-#### Detección de colisiones
-Sistema de colisión entre la cesta y las manzanas que:
-- Actualiza la puntuación según el tipo
-- Reproduce efectos de sonido
-- Elimina la manzana del juego
+### MainMenuScreen
 
-#### Sistema de vidas
-- Pérdida de vida cuando manzanas buenas escapan
-- Seguimiento visual en el HUD
-- Activación de Game Over al llegar a 0
+Pantalla principal que incluye:
+
+* título del juego
+* récord actual
+* tiempo configurado
+* acceso a:
+
+    * jugar
+    * ajustes
+    * cómo jugar
+
+---
+
+### GameScreen
+
+Contiene toda la lógica del juego:
+
+* movimiento de la cesta
+* caída de manzanas
+* detección de colisiones
+* control de puntuación
+* sistema de niveles
+* temporizador de partida
+
+---
+
+### SettingsScreen
+
+Permite modificar:
+
+* ⏱️ tiempo de partida
+* 🔊 sonido activado / desactivado
+
+---
+
+### HowToPlayScreen
+
+Pantalla informativa que explica:
+
+* tipos de manzana
+* mecánicas básicas
+* controles
+
+---
+
+# 🔧 Desarrollo
+
+## Movimiento independiente del FPS
+
+Todo el movimiento usa:
+
+```java
+Gdx.graphics.getDeltaTime()
+```
+
+Esto asegura que el juego funcione igual en cualquier dispositivo.
+
+---
+
+## Generación de manzanas
+
+* sistema basado en temporizador
+* posiciones aleatorias en el eje X
+* velocidad dependiente del nivel
+* probabilidades diferentes según el tipo de manzana
+
+---
+
+## Detección de colisiones
+
+Se utilizan objetos `Rectangle` para comprobar:
+
+```text
+cesta ↔ manzana
+```
+
+Según el tipo de manzana se ejecuta:
+
+* suma de puntos
+* resta de puntos
+* power-up
+* Game Over
+
+---
+
+## Sistema de tiempo configurable
+
+El tiempo de partida se guarda en:
+
+```
+Preferences → tiempoJuego
+```
+
+Características:
+
+* incremento de **±10 segundos**
+* mínimo **30s**
+* valor por defecto **60s**
+
+---
 
 ## 🎓 Aprendizajes
 
-Durante el desarrollo de ManzanitaWorld se identificaron conceptos clave:
+Este proyecto aplica varias buenas prácticas de desarrollo:
 
-### Separación lógica-gráfica
-- **Lógica**: Gestión de datos (posiciones, velocidades, tipos, estados)
-- **Gráfica**: Representación visual de la lógica (sprites, textos, efectos)
+Separación lógica–gráfica
+Lógica: gestión de datos (posiciones, velocidades, tipos de manzana, estados, tiempo, nivel, récord).
 
-### Buenas prácticas implementadas
-- ✅ Uso de `delta time` para movimiento consistente
-- ✅ Arquitectura basada en `Screen` para escalabilidad
-- ✅ Separación de responsabilidades entre clases
-- ✅ Código mantenible y extensible
-- ✅ Facilita la adición de nuevas mecánicas
+Gráfica: representación visual de la lógica (sprites, textos, efectos visuales).
 
-## 🚀 Instalación y ejecución
+Buenas prácticas implementadas
+✅ Uso de delta time para movimiento consistente.
+
+✅ Arquitectura basada en Screen para escalabilidad y múltiples pantallas.
+
+✅ Separación de responsabilidades entre clases.
+
+✅ Uso de Preferences para guardar configuración (tiempo, sonido, high score).
+
+
+
+---
+
+# 🚀 Instalación y ejecución
+
+Clonar el repositorio:
 
 ```bash
-# Clonar el repositorio
 git clone https://github.com/tu-usuario/ManzanitaWorld.git
-
-# Navegar al directorio
-cd ManzanitaWorld
-
-# Compilar y ejecutar (según tu configuración de Gradle)
-./gradlew desktop:run
 ```
 
-## 🛠️ Tecnologías utilizadas
+Entrar en el proyecto:
 
-- **libGDX**: Framework principal de desarrollo
-- **Java**: Lenguaje de programación
-- **Gradle**: Sistema de construcción
+```bash
+cd ManzanitaWorld
+```
 
+Ejecutar versión Desktop:
 
+```bash
+./gradlew lwjgl3:run
+```
 
+---
+
+## 📱 Android
+
+Puedes ejecutar la versión Android desde **Android Studio** o con:
+
+```bash
+./gradlew android:installDebug android:run
+```
+
+---
+
+# 🛠️ Tecnologías utilizadas
+
+* **Java**
+* **libGDX**
+* **Gradle**
+
+---
+
+# 📜 Licencia
+
+Proyecto educativo desarrollado con fines de aprendizaje.
