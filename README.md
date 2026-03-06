@@ -6,7 +6,7 @@ Un juego arcade desarrollado con **libGDX** donde controlas una cesta para recog
 
 ## 👨‍💻 Autor
 
-**JE**
+**Javier Escudero**
 
 ---
 
